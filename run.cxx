@@ -7,7 +7,7 @@ using namespace std;
 
 int run(int tofMultCut = INT_MAX)
 {
-  zdcTree t(0,2);
+  zdcTree t(0,tofMultCut);
   t.Loop();
 
   return 0;
