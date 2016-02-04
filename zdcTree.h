@@ -1,11 +1,10 @@
 //////////////////////////////////////////////////////////
-// This class has been automatically generated on
-// Wed Mar  6 13:14:51 2013 by ROOT version 5.22/00
-// from TTree zdcTree/ROOT Tree for ZDC monitoring
-// found on file: ../../testrun/run13.ZdcPolarimetry.pp500/histo/run_14063058.histo.root
+//                ZDC tree class                        //
+// Class for analyzing ZDC tree                         //
+//                                                      //
+// maintainer Miroslav Simko (msimko@bnl.gov)           //
 //////////////////////////////////////////////////////////
 //
-// This code will analyse 
 
 #ifndef zdcTree_h
 #define zdcTree_h
@@ -13,6 +12,7 @@
 #include <TROOT.h>
 #include <TChain.h>
 #include <TFile.h>
+#include <climits>
 //#include "zdcTree_Self_Define.h"
 
 
@@ -20,6 +20,8 @@ class zdcTree {
   public :
     TTree          *fChain;   //!pointer to the analyzed TTree or TChain
     Int_t           fCurrent; //!current Tree number in a TChain
+
+    int mTofCut;              // TOF cut // msimko
 
     // Declaration of leaf types
     UShort_t        zdc_ADC_EastSum_Attenuated;
@@ -73,7 +75,7 @@ class zdcTree {
     TBranch        *b_bbc_ADC_WestSum_SmallTile;   //!
     TBranch        *b_bbc_ADC_WestSum_LargeTile;   //!
 
-    zdcTree(TTree *tree=0);
+    zdcTree(TTree *tree=0, int tofCut = INT_MAX);
     virtual ~zdcTree();
     virtual Int_t    Cut(Long64_t entry);
     virtual Int_t    GetEntry(Long64_t entry);
@@ -87,7 +89,7 @@ class zdcTree {
 #endif
 
 #ifdef zdcTree_cxx
-zdcTree::zdcTree(TTree *tree)
+zdcTree::zdcTree(TTree *tree, int tofCut)
 {
   // if parameter tree is not specified (or zero), connect the file
   // used to generate this class and read the Tree.
@@ -101,8 +103,9 @@ zdcTree::zdcTree(TTree *tree)
     }
     tree = (TTree*)gDirectory->Get("zdcTree");
 
-  }
+  } // if (tree == 0)
   Init(tree);
+  mTofCut = tofCut;
 }
 
 zdcTree::~zdcTree()

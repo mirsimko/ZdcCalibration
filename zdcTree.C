@@ -148,6 +148,10 @@ void zdcTree::Loop()
       cout<<resetiosflags(ios::fixed);
     }
 
+    // TOF multiplicity cut
+    if(tof_multiplicity >= mTofCut)
+      continue;
+
     east_att->Fill(zdc_ADC_EastSum_Attenuated);
     east_sum->Fill(zdc_ADC_EastSum);
     east_1->Fill(zdc_ADC_EastTow1);
