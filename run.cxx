@@ -1,13 +1,14 @@
+#include <climits>
 #include <iostream>
 #include <TROOT.h>
+#include "zdcTree.h"
 using namespace std;
 
-int run()
-{
-	gROOT->ProcessLine(".L zdcTree.C");
-	gROOT->ProcessLine("zdcTree t");
-	gROOT->ProcessLine("t.Loop\(\)");
-	gROOT->ProcessLine(".q");
 
-	return 0;
+int run(int tofMultCut = INT_MAX)
+{
+  zdcTree t(0,2);
+  t.Loop();
+
+  return 0;
 }
