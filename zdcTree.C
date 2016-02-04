@@ -4,6 +4,11 @@
 #include <TStyle.h>
 #include <TCanvas.h>
 #include <iomanip>
+#include <iostream>
+#include <fstream>
+#include <stdio.h>
+
+using namespace std;
 
 void zdcTree::Loop()
 {
@@ -45,6 +50,7 @@ void zdcTree::Loop()
   char command_mkdir[200];
   sprintf(command_mkdir,"mkdir -p %s",folder_name);
 
+  ofstream ofile;
   if(Output_datafile)
   {
     if(Create_folder) {cout<<"Will Create folder   : "<<folder_name<<endl;Create_folder=false;}
@@ -52,9 +58,8 @@ void zdcTree::Loop()
     char dfilename[200];
     sprintf(dfilename,"%s/analysis/%d/%d_gain_ratio.dat",work_dir,RunNumber,RunNumber);
     cout<<"Will Create datafile : "<<dfilename<<endl;
-    ofstream ofile;
     ofile.open(dfilename,ios::out);
-    if(!ofile) {cerr<<"Create data file failed !"<<endl;return 0;}
+    if(!ofile) {cerr<<"Create data file failed !"<<endl; return;}
   }
   if(Output_rootfile)
   {
@@ -63,8 +68,10 @@ void zdcTree::Loop()
     char tfilename[200];
     sprintf(tfilename,"%s/analysis/%d/%d_my_zdc_result_file.root",work_dir,RunNumber,RunNumber);
     cout<<"Will Create rootfile : "<<tfilename<<endl;
-    TFile *f = new TFile(tfilename,"CREATE");
+    TFile *f = new TFile(tfilename,"RECREATE");
   }
+
+  TCanvas *c;
   if(Output_gif_file)
   {
     if(Create_folder) {cout<<"Will Create folder   : "<<folder_name<<endl;Create_folder=false;}
@@ -73,26 +80,26 @@ void zdcTree::Loop()
     gStyle->SetPalette(1,0);
     gStyle->SetOptLogz(1);
     gStyle->SetOptDate(0);
-    TCanvas *c = new TCanvas("c","c",800,600);
-
-    char savename_east_att[200];
-    char savename_east_sum[200];
-    char savename_east_1[200];
-    char savename_east_2[200];
-    char savename_east_3[200];
-
-    char savename_west_att[200];
-    char savename_west_sum[200];
-    char savename_west_1[200];
-    char savename_west_2[200];
-    char savename_west_3[200];
-
-    char savename_gain_east[200];
-    char savename_gain_west[200];
-
-    char savename_east_sum_diff[200];
-    char savename_west_sum_diff[200];
+    c = new TCanvas("c","c",800,600);
   }
+
+  char savename_east_att[200];
+  char savename_east_sum[200];
+  char savename_east_1[200];
+  char savename_east_2[200];
+  char savename_east_3[200];
+
+  char savename_west_att[200];
+  char savename_west_sum[200];
+  char savename_west_1[200];
+  char savename_west_2[200];
+  char savename_west_3[200];
+
+  char savename_gain_east[200];
+  char savename_gain_west[200];
+
+  char savename_east_sum_diff[200];
+  char savename_west_sum_diff[200];
 
   TH1D *east_att = new TH1D("ZDC_ADC_east_att","ZDC_ADC_east_att",400,0,4000);// attenuated
   TH1D *east_sum = new TH1D("ZDC_ADC_east_sum","ZDC_ADC_east_sum",400,0,4000);

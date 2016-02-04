@@ -1,3 +1,3 @@
 {
-  gROOT->ProcessLine(".L zdcTree.C");
+  gROOT->ProcessLine(".L zdcTree.C+");
 }
