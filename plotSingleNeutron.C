@@ -46,9 +46,13 @@ void plotSingleNeutron()
   hWest->GetXaxis()->SetTitle("ADC sum west [-]");
 
   hEast->GetYaxis()->SetTitle("N [-]");
+  hEast->GetYaxis()->SetTitleOffset(1.1);
   hWest->GetYaxis()->SetTitle("N [-]");
+  hWest->GetYaxis()->SetTitleOffset(1.1);
 
   C1->cd();
+  gStyle->SetOptFit(0111);
+
   hEast->Draw();
 
   C2->cd();
