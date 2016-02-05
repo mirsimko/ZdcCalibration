@@ -20,7 +20,7 @@ void zdcTree::Loop()
   bool Create_folder = true;
   //*******************************************************
   //*******************************************************
-  int RunNumber = 17035003;
+  int RunNumber = 17035115;
   //	char trgSetup[50] = {"production_15GeV_2014"};
   //	char trgSetup[20] = {"pedestal_rhicclock"};
   char trgSetup[20] = {"ZdcCalibration"};
@@ -102,13 +102,13 @@ void zdcTree::Loop()
   char savename_west_sum_diff[200];
 
   TH1D *east_att = new TH1D("ZDC_ADC_east_att","ZDC_ADC_east_att",400,0,4000);// attenuated
-  TH1D *east_sum = new TH1D("ZDC_ADC_east_sum","ZDC_ADC_east_sum",400,0,4000);
+  TH1D *east_sum = new TH1D("ZDC_ADC_east_sum","ZDC_ADC_east_sum",100,0,400); // close view of the single neutron peak
   TH1D *east_1 = new TH1D("ZDC_ADC_east_1","ZDC_ADC_east_1",400,0,4000);
   TH1D *east_2 = new TH1D("ZDC_ADC_east_2","ZDC_ADC_east_2",400,0,4000);
   TH1D *east_3 = new TH1D("ZDC_ADC_east_3","ZDC_ADC_east_3",400,0,4000);
 
   TH1D *west_att = new TH1D("ZDC_ADC_west_att","ZDC_ADC_west_att",400,0,4000);
-  TH1D *west_sum = new TH1D("ZDC_ADC_west_sum","ZDC_ADC_west_sum",400,0,4000);
+  TH1D *west_sum = new TH1D("ZDC_ADC_west_sum","ZDC_ADC_west_sum",100,0,400); // close view of the single neutron peak
   TH1D *west_1 = new TH1D("ZDC_ADC_west_1","ZDC_ADC_west_1",400,0,4000);
   TH1D *west_2 = new TH1D("ZDC_ADC_west_2","ZDC_ADC_west_2",400,0,4000);
   TH1D *west_3 = new TH1D("ZDC_ADC_west_3","ZDC_ADC_west_3",400,0,4000);
