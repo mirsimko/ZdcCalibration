@@ -155,6 +155,12 @@ void zdcTree::Loop()
       cout<<resetiosflags(ios::fixed);
     }
 
+    // ADC sum cuts
+    // bool eastCut = zdc_ADC_EastSum > 92 - 2*18 && zdc_ADC_EastSum < 92 + 2*18;
+    // bool westCut = zdc_ADC_WestSum > 93 - 2*23 && zdc_ADC_WestSum < 93 + 2*23;
+    // if(!westCut)
+    //   continue;
+
     // TOF multiplicity cut
     if(tof_multiplicity >= mTofCut)
       continue;
