@@ -9,7 +9,7 @@
 
 void plotSingleNeutron()
 {
-  TFile *inf = new TFile("analysis/17035115/17035115_my_zdc_result_file.root");
+  TFile *inf = new TFile("analysis/17037043/17037043_my_zdc_result_file.root");
 
   TCanvas *C1 = new TCanvas("C1", "east", 600, 400);
   TCanvas *C2 = new TCanvas("C2", "west", 600, 400);
@@ -20,7 +20,8 @@ void plotSingleNeutron()
   TF1 *eastF = new TF1("eastF", "[0] + ([1])*(TMath::Exp(-[2]*x)) + ([3])*(TMath::Gaus(x,[4],[5],1))",50,180);
   TF1 *westF = new TF1("westF", "[0] + ([1])*(TMath::Exp(-[2]*x)) + ([3])*(TMath::Gaus(x,[4],[5],1))",50,180);
 
-  eastF->SetParameters( 7.11954e+01, 1.91250e+03 , 2.24099e-02, 14,  9.44266e+01 , 9.80875e+00 );
+  //eastF->SetParameters( 7.11954e+01, 1.91250e+03 , 2.24099e-02, 14,  9.44266e+01 , 9.80875e+00 );
+  eastF->SetParameters(  -3500, 3500, 0.00044, 15000, 52  , 9.80875e+00 );
   eastF->SetParName(0,"Constant");
   eastF->SetParName(1,"BgConstant");
   eastF->SetParName(2,"BgSlope");
@@ -28,7 +29,8 @@ void plotSingleNeutron()
   eastF->SetParName(4,"Mean");
   eastF->SetParName(5,"sigma");
 
-  westF->SetParameters( 7.11954e+01, 1.91250e+03 , 2.24099e-02, 14,  110 , 9.80875e+00 );
+  westF->SetParameters( -3300, 3600, 0.001, 18000, 52 , 9.80875e+00 );
+  //westF->SetParameters( 7.11954e+01, 1.91250e+03 , 2.24099e-02, 14,  110 , 9.80875e+00 );
   westF->SetParName(0,"Constant");
   westF->SetParName(1,"BgConstant");
   westF->SetParName(2,"BgSlope");
@@ -36,11 +38,11 @@ void plotSingleNeutron()
   westF->SetParName(4,"Mean");
   westF->SetParName(5,"sigma");
 
-  hEast->Fit("eastF", "","", 50, 180);
-  hWest->Fit("westF", "","", 50, 180);
+  hEast->Fit("eastF", "","", 20, 180);
+  hWest->Fit("westF", "","", 20, 180);
 
-  hEast->SetAxisRange(50,180,"X");
-  hWest->SetAxisRange(50,180,"X");
+  // hEast->SetAxisRange(50,180,"X");
+  // hWest->SetAxisRange(50,180,"X");
 
   hEast->GetXaxis()->SetTitle("ADC sum east [-]");
   hWest->GetXaxis()->SetTitle("ADC sum west [-]");
@@ -51,11 +53,11 @@ void plotSingleNeutron()
   hWest->GetYaxis()->SetTitleOffset(1.1);
 
   C1->cd();
-  gStyle->SetOptFit(0111);
-
+  gStyle->SetOptFit(1111);
   hEast->Draw();
 
   C2->cd();
+  gStyle->SetOptFit(1111);
   hWest->Draw();
 
 }
