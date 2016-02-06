@@ -101,6 +101,9 @@ void zdcTree::Loop()
   char savename_east_sum_diff[200];
   char savename_west_sum_diff[200];
 
+  char savename_west_sum_combination[200];
+  char savename_east_sum_combination[200];
+
   TH1D *east_att = new TH1D("ZDC_ADC_east_att","ZDC_ADC_east_att",400,0,4000);// attenuated
   TH1D *east_sum = new TH1D("ZDC_ADC_east_sum","ZDC_ADC_east_sum",100,0,400); // close view of the single neutron peak
   TH1D *east_1 = new TH1D("ZDC_ADC_east_1","ZDC_ADC_east_1",400,0,4000);
@@ -122,6 +125,11 @@ void zdcTree::Loop()
   TH2D *west_sum_diff = new TH2D("west_sum_diff","west_sum_diff",4000,0,4000,4000,0,4000);
   west_sum_diff->GetXaxis()->SetTitle("ZDC_ADC_Sum:Tower1+Tower2+Tower3");
   west_sum_diff->GetYaxis()->SetTitle("ZDC_Sum_ADC");
+
+  TH1D *east_sum_combination = new TH1D("east_sum_combination", "East ADC: Tower1 + Tower2 + Tower3", 100, 0, 400);
+  east_sum_combination->GetXaxis()->SetTitle("ADC_EAST:Tower1+Tower2+Tower3");
+  TH1D *west_sum_combination = new TH1D("west_sum_combination", "West ADC: Tower1 + Tower2 + Tower3", 100, 0, 400);
+  west_sum_combination->GetXaxis()->SetTitle("ADC_WEST:Tower1+Tower2+Tower3");
 
   int east_count_att=0;
   int east_count_sum=0;
@@ -158,8 +166,15 @@ void zdcTree::Loop()
     // ADC sum cuts
     // bool eastCut = zdc_ADC_EastSum > 92 - 2*18 && zdc_ADC_EastSum < 92 + 2*18;
     // bool westCut = zdc_ADC_WestSum > 93 - 2*23 && zdc_ADC_WestSum < 93 + 2*23;
-    // if(!westCut)
-    //   continue;
+    bool westCut = zdc_ADC_WestSum < 200;
+    if(!westCut)
+      continue;
+
+    // TAC cuts
+    bool eastTACcut = zdc_TDC_EastSum > 200 && zdc_TDC_EastSum < 2000;
+    bool westTACcut = zdc_TDC_WestSum > 200 && zdc_TDC_WestSum < 2000;
+    if (!(eastTACcut && westTACcut))
+      continue;
 
     // TOF multiplicity cut
     if(tof_multiplicity >= mTofCut)
@@ -191,6 +206,9 @@ void zdcTree::Loop()
 
     east_sum_diff->Fill(zdc_ADC_EastTow1+zdc_ADC_EastTow2+zdc_ADC_EastTow3,zdc_ADC_EastSum);
     west_sum_diff->Fill(zdc_ADC_WestTow1+zdc_ADC_WestTow2+zdc_ADC_WestTow3,zdc_ADC_WestSum);
+
+    east_sum_combination->Fill(zdc_ADC_EastTow1+zdc_ADC_EastTow2+zdc_ADC_EastTow3);
+    west_sum_combination->Fill(zdc_ADC_WestTow1+zdc_ADC_WestTow2+zdc_ADC_WestTow3);
     //Analysis code ends here ***************************************************
   }
   printf("\033[?25h");
@@ -221,6 +239,8 @@ void zdcTree::Loop()
     gain_west->Write();
     east_sum_diff->Write();
     west_sum_diff->Write();
+    east_sum_combination->Write();
+    west_sum_combination->Write();
   }
   if(Output_gif_file)
   {
@@ -242,6 +262,9 @@ void zdcTree::Loop()
     sprintf(savename_east_sum_diff,"%s/analysis/%d/%d_east_sum_diff.gif",work_dir,RunNumber,RunNumber);
     sprintf(savename_west_sum_diff,"%s/analysis/%d/%d_west_sum_diff.gif",work_dir,RunNumber,RunNumber);
 
+    sprintf(savename_west_sum_combination,"%s/analysis/%d/%d_west_sum_combination.gif",work_dir,RunNumber,RunNumber);
+    sprintf(savename_east_sum_combination,"%s/analysis/%d/%d_east_sum_combination.gif",work_dir,RunNumber,RunNumber);
+
     c->SetLogy(1);
     east_att->Draw();	c->SaveAs(savename_east_att);
     east_sum->Draw();	c->SaveAs(savename_east_sum);
@@ -254,6 +277,11 @@ void zdcTree::Loop()
     west_1->Draw();		c->SaveAs(savename_west_1);
     west_2->Draw();		c->SaveAs(savename_west_2);
     west_3->Draw();		c->SaveAs(savename_west_3);
+
+    west_sum_combination->Draw();
+    c->SaveAs(savename_west_sum_combination);
+    east_sum_combination->Draw();
+    c->SaveAs(savename_east_sum_combination);
 
     c->SetLogy(0);
     gain_east->Draw();	c->SaveAs(savename_gain_east);
