@@ -9,14 +9,13 @@
 
 void plotSingleNeutron()
 {
-  TFile *inf1 = new TFile("analysis/17037056_my_zdc_result_file_east.root");
-  TFile *inf2 = new TFile("analysis/17037056_my_zdc_result_file_west.root");
+  TFile *inf1 = new TFile("analysis/17038001/17038001_my_zdc_result_file.root");
 
   TCanvas *C1 = new TCanvas("C1", "east", 600, 400);
   TCanvas *C2 = new TCanvas("C2", "west", 600, 400);
 
   TH1D *hEast = (TH1D*)inf1->Get("ZDC_ADC_east_sum");
-  TH1D *hWest = (TH1D*)inf2->Get("ZDC_ADC_west_sum");
+  TH1D *hWest = (TH1D*)inf1->Get("ZDC_ADC_west_sum");
 
   TF1 *eastF = new TF1("eastF", "[0] + ([1])*(TMath::Exp(-[2]*x)) + ([3])*(TMath::Gaus(x,[4],[5],1))",50,180);
   TF1 *westF = new TF1("westF", "[0] + ([1])*(TMath::Exp(-[2]*x)) + ([3])*(TMath::Gaus(x,[4],[5],1))",50,180);
