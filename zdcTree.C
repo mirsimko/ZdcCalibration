@@ -20,7 +20,7 @@ void zdcTree::Loop()
   bool Create_folder = true;
   //*******************************************************
   //*******************************************************
-  int RunNumber = 17037043;
+  int RunNumber = 17038001;
   //	char trgSetup[50] = {"production_15GeV_2014"};
   //	char trgSetup[20] = {"pedestal_rhicclock"};
   char trgSetup[20] = {"ZdcCalibration"};
@@ -105,13 +105,13 @@ void zdcTree::Loop()
   char savename_east_sum_combination[200];
 
   TH1D *east_att = new TH1D("ZDC_ADC_east_att","ZDC_ADC_east_att",400,0,4000);// attenuated
-  TH1D *east_sum = new TH1D("ZDC_ADC_east_sum","ZDC_ADC_east_sum",400,0,4000); // close view of the single neutron peak
+  TH1D *east_sum = new TH1D("ZDC_ADC_east_sum","ZDC_ADC_east_sum",100,0,400); // close view of the single neutron peak
   TH1D *east_1 = new TH1D("ZDC_ADC_east_1","ZDC_ADC_east_1",400,0,4000);
   TH1D *east_2 = new TH1D("ZDC_ADC_east_2","ZDC_ADC_east_2",400,0,4000);
   TH1D *east_3 = new TH1D("ZDC_ADC_east_3","ZDC_ADC_east_3",400,0,4000);
 
   TH1D *west_att = new TH1D("ZDC_ADC_west_att","ZDC_ADC_west_att",400,0,4000);
-  TH1D *west_sum = new TH1D("ZDC_ADC_west_sum","ZDC_ADC_west_sum",400,0,4000); // close view of the single neutron peak
+  TH1D *west_sum = new TH1D("ZDC_ADC_west_sum","ZDC_ADC_west_sum",100,0,400); // close view of the single neutron peak
   TH1D *west_1 = new TH1D("ZDC_ADC_west_1","ZDC_ADC_west_1",400,0,4000);
   TH1D *west_2 = new TH1D("ZDC_ADC_west_2","ZDC_ADC_west_2",400,0,4000);
   TH1D *west_3 = new TH1D("ZDC_ADC_west_3","ZDC_ADC_west_3",400,0,4000);
@@ -166,10 +166,10 @@ void zdcTree::Loop()
     // ADC sum cuts
     // bool eastCut = zdc_ADC_EastSum > 92 - 2*18 && zdc_ADC_EastSum < 92 + 2*18;
     // bool westCut = zdc_ADC_WestSum > 93 - 2*23 && zdc_ADC_WestSum < 93 + 2*23;
-    // bool westCut = zdc_ADC_WestSum < 200;
+    bool westCut = zdc_ADC_WestSum < 200;
     bool eastCut = zdc_ADC_EastSum < 200;
-    if(!eastCut)
-      continue;
+    // if(!eastCut)
+    //   continue;
 
     // TAC cuts
     bool eastTACcut = zdc_TDC_EastSum > 200 && zdc_TDC_EastSum < 2000;
@@ -181,35 +181,41 @@ void zdcTree::Loop()
     if(tof_multiplicity >= mTofCut)
       continue;
 
-    east_att->Fill(zdc_ADC_EastSum_Attenuated);
-    east_sum->Fill(zdc_ADC_EastSum);
-    east_1->Fill(zdc_ADC_EastTow1);
-    east_2->Fill(zdc_ADC_EastTow2);
-    east_3->Fill(zdc_ADC_EastTow3);
+    if(!westCut) // look at the East
+    {
+      east_att->Fill(zdc_ADC_EastSum_Attenuated);
+      east_sum->Fill(zdc_ADC_EastSum);
+      east_1->Fill(zdc_ADC_EastTow1);
+      east_2->Fill(zdc_ADC_EastTow2);
+      east_3->Fill(zdc_ADC_EastTow3);
 
-    west_att->Fill(zdc_ADC_WestSum_Attenuated);
-    west_sum->Fill(zdc_ADC_WestSum);
-    west_1->Fill(zdc_ADC_WestTow1);
-    west_2->Fill(zdc_ADC_WestTow2);
-    west_3->Fill(zdc_ADC_WestTow3);
+      east_count_att += zdc_ADC_EastSum_Attenuated;
+      east_count_sum += zdc_ADC_EastSum;
+      east_count_1 += zdc_ADC_EastTow1;
+      east_count_2 += zdc_ADC_EastTow2;
+      east_count_3 += zdc_ADC_EastTow3;
 
-    east_count_att += zdc_ADC_EastSum_Attenuated;
-    east_count_sum += zdc_ADC_EastSum;
-    east_count_1 += zdc_ADC_EastTow1;
-    east_count_2 += zdc_ADC_EastTow2;
-    east_count_3 += zdc_ADC_EastTow3;
+      east_sum_diff->Fill(zdc_ADC_EastTow1+zdc_ADC_EastTow2+zdc_ADC_EastTow3,zdc_ADC_EastSum);
+      east_sum_combination->Fill(zdc_ADC_EastTow1+zdc_ADC_EastTow2+zdc_ADC_EastTow3);
+    }
 
-    west_count_att += zdc_ADC_WestSum_Attenuated;
-    west_count_sum += zdc_ADC_WestSum;
-    west_count_1 += zdc_ADC_WestTow1;
-    west_count_2 += zdc_ADC_WestTow2;
-    west_count_3 += zdc_ADC_WestTow3;
+    if(!eastCut) // look at the West
+    {
+      west_att->Fill(zdc_ADC_WestSum_Attenuated);
+      west_sum->Fill(zdc_ADC_WestSum);
+      west_1->Fill(zdc_ADC_WestTow1);
+      west_2->Fill(zdc_ADC_WestTow2);
+      west_3->Fill(zdc_ADC_WestTow3);
 
-    east_sum_diff->Fill(zdc_ADC_EastTow1+zdc_ADC_EastTow2+zdc_ADC_EastTow3,zdc_ADC_EastSum);
-    west_sum_diff->Fill(zdc_ADC_WestTow1+zdc_ADC_WestTow2+zdc_ADC_WestTow3,zdc_ADC_WestSum);
+      west_count_att += zdc_ADC_WestSum_Attenuated;
+      west_count_sum += zdc_ADC_WestSum;
+      west_count_1 += zdc_ADC_WestTow1;
+      west_count_2 += zdc_ADC_WestTow2;
+      west_count_3 += zdc_ADC_WestTow3;
 
-    east_sum_combination->Fill(zdc_ADC_EastTow1+zdc_ADC_EastTow2+zdc_ADC_EastTow3);
-    west_sum_combination->Fill(zdc_ADC_WestTow1+zdc_ADC_WestTow2+zdc_ADC_WestTow3);
+      west_sum_diff->Fill(zdc_ADC_WestTow1+zdc_ADC_WestTow2+zdc_ADC_WestTow3,zdc_ADC_WestSum);
+      west_sum_combination->Fill(zdc_ADC_WestTow1+zdc_ADC_WestTow2+zdc_ADC_WestTow3);
+    }
     //Analysis code ends here ***************************************************
   }
   printf("\033[?25h");
