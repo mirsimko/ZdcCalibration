@@ -76,4 +76,26 @@ West:
 2743
 2771
 run number: 17037045
+
+Back to original voltages:
+East:
+2471
+2779
+2353
+West:
+2532
+2643
+2671
+run number: 17037055
+
+Voltages to make the single neutron peak at 60:
+2547
+3159
+2618
+
+2333
+2542
+2883
+run number: 17037056
+
 #######################################################################

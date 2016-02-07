@@ -1,0 +1,74 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{breakurl}
+\usepackage{indentfirst}
+\usepackage{graphicx}
+\usepackage{enumerate}
+\usepackage[breaklinks, hidelinks]{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+
+\newcommand{\vect}[1]{\ensuremath{\boldsymbol{#1}}}
+\newcommand{\ddd}{\ensuremath{\,\mathrm{d}}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\pravYi}{P(Y_i|\alpha, \beta, \epsilon_i)}
+\newcommand{\pravY}{P(\boldsymbol{Y}|\alpha, \beta, \epsilon_i)}
+\newcommand{\nsigma}{\frac{N}{\sigma^2}}
+\newcommand{\arpxsq}{\overline{(X^2)}}
+\newcommand{\sigman}{\frac{\sigma^2}{N}}
+\newcommand{\jmenovatel}{ \arpxsq - \overline{X}^2}
+\usepackage{amsmath}
+%opening
+\title{ZDC voltages}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+The voltages were calculated according to the formula
+$$
+G = aU^b
+$$
+where $G$ is a gain and $U$ stands for voltage. The coefficients $a$ and $b$ are 
+extracted from the following document:\\
+\url{https://drupal.star.bnl.gov/STAR/system/files/ZDC_Document_20101005.pdf}\\
+and are equal to approximately
+$$
+b=4.2\,, \qquad a=4.0\,.
+$$
+
+We take into account that the desired position of the single neutron peak is at 60 ADC values
+and the desired ratio between the towers is 6:3:1. To calculate the desired voltages we use the
+formula
+$$
+U_{\text{result}} = U_\text{current}\left(\frac{G_\text{desired}}{G} 
+\frac{R_\text{desired}}{R}\right)^{1/4.2}
+$$
+where $G$ is the current position of the neutron peak, $G_\text{desired}$ is the desired position
+of the neutron peak (currently 60), $R_{desired}$ is the desired ratio between the gain of the third
+tower and this tower, and $R$ is the current ratio.
+The resulting voltages are in the following table:
+\begin{center}
+\begin{tabular}{lccccc}
+ \toprule
+ &$U_\text{current}$[V]&Single n pos.&gain ratio&desired gain ratio&$U_\text{result}$[V]\\
+\midrule
+ East&2471&38.33&8.27&6&2547\\
+&2779&38.33&2.74&3&3159\\
+&2353&38.33&1&1&2618\\
+ \midrule
+West&2532&43.56&11.65&6&2333\\
+&2643&43.56&4.87&3&2542\\
+&2671&43.56&1&1&2883\\
+ \bottomrule
+\end{tabular}
+
+\end{center}
+
+
+\end{document}
