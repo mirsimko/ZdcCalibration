@@ -17,19 +17,21 @@ void plotSingleNeutron()
   TH1D *hEast = (TH1D*)inf1->Get("ZDC_ADC_east_sum");
   TH1D *hWest = (TH1D*)inf1->Get("ZDC_ADC_west_sum");
 
-  TF1 *eastF = new TF1("eastF", "[0] + ([1])*(TMath::Exp(-[2]*x)) + ([3])*(TMath::Gaus(x,[4],[5],1))",50,180);
-  TF1 *westF = new TF1("westF", "[0] + ([1])*(TMath::Exp(-[2]*x)) + ([3])*(TMath::Gaus(x,[4],[5],1))",50,180);
+  TF1 *eastF = new TF1("eastF", "[0] + ([1])*(TMath::Exp(-[2]*x)) + ([3])*(TMath::Gaus(x,[4],[5],1)) + [6]*TMath::Gaus(x,2.*[4],[7],1)",50,180);
+  TF1 *westF = new TF1("westF", "[0] + ([1])*(TMath::Exp(-[2]*x)) + ([3])*(TMath::Gaus(x,[4],[5],1)) + [6]*TMath::Gaus(x,2.*[4],[7],1)",50,180);
 
   //eastF->SetParameters( 7.11954e+01, 1.91250e+03 , 2.24099e-02, 14,  9.44266e+01 , 9.80875e+00 );
-  eastF->SetParameters(  -3500, 3500, 0.00044, 15000, 52  , 9.80875e+00 );
+  eastF->SetParameters(  -3500, 3500, 0.00044, 15000, 52  , 9.80875e+00, 5000, 10 );
   eastF->SetParName(0,"Constant");
   eastF->SetParName(1,"BgConstant");
   eastF->SetParName(2,"BgSlope");
-  eastF->SetParName(3,"Yield");
+  eastF->SetParName(3,"Yield Single");
   eastF->SetParName(4,"Mean");
-  eastF->SetParName(5,"sigma");
+  eastF->SetParName(5,"sigma Single");
+  eastF->SetParName(6,"Yield Double");
+  eastF->SetParName(7,"sigma Double");
 
-  westF->SetParameters( -3300, 3600, 0.001, 18000, 52 , 9.80875e+00 );
+  westF->SetParameters( -3300, 3600, 0.00001, 9000, 65 , 9.80875e+00 ,2200, 10);
   //westF->SetParameters( 7.11954e+01, 1.91250e+03 , 2.24099e-02, 14,  110 , 9.80875e+00 );
   westF->SetParName(0,"Constant");
   westF->SetParName(1,"BgConstant");
@@ -37,9 +39,11 @@ void plotSingleNeutron()
   westF->SetParName(3,"Yield");
   westF->SetParName(4,"Mean");
   westF->SetParName(5,"sigma");
+  westF->SetParName(6,"Yield Double");
+  westF->SetParName(7,"sigma Double");
 
-  hEast->Fit("eastF", "","", 20, 180);
-  hWest->Fit("westF", "","", 20, 180);
+  hEast->Fit("eastF", "","", 35, 300);
+  hWest->Fit("westF", "","", 35, 300);
 
   // hEast->SetAxisRange(50,180,"X");
   // hWest->SetAxisRange(50,180,"X");
