@@ -49,9 +49,6 @@ formula
 U_{\text{result}} = U_\text{current}\left(\frac{G_\text{desired}}{G} 
 \frac{R_\text{desired}}{R}\right)^{1/4.2}
 \end{equation}
-
-
-
 where $G$ is the current position of the neutron peak, $G_\text{desired}$ is the desired position
 of the neutron peak (currently 60), $R_{desired}$ is the desired ratio between the gain of the ADC SUM
 tower and the current tower, and $R$ is the current ratio.
@@ -62,7 +59,7 @@ The ratios between the towers with the resulting voltages from the test
 are shown in Table \ref{corected}.
 Subsequently, new high-voltage values are also calculated.
 
-\begin{table}[!htb] 
+\begin{table}[htb] 
 \caption{Calculated voltages from the position of the single neutron peak and ratios 
 between ZDC towers}
 \label{uncorected}
@@ -83,7 +80,7 @@ West&2532&43.56&0.665&0.6&2667\\
 \end{center}
 \end{table}
 
-\begin{figure}[!htb]
+\begin{figure}[htb]
 \begin{center}
 \includegraphics[width=.8\textwidth]{CorrectedEast.pdf}
 \end{center}
@@ -91,7 +88,7 @@ West&2532&43.56&0.665&0.6&2667\\
 \label{eastPlot}
 \end{figure}
 
-\begin{figure}[!htb]
+\begin{figure}[htb]
 \begin{center}
 \includegraphics[width=.8\textwidth]{CorrectedWest.pdf}
 \end{center}
@@ -99,7 +96,7 @@ West&2532&43.56&0.665&0.6&2667\\
 \label{westPlot}
 \end{figure}
 
-\begin{table}[!htb] 
+\begin{table}[htb] 
 \caption{Calculated voltages from the test with corrected high voltages.
 The value 50 was set as the deseired position of the single neutron peak}
 \label{corected}
@@ -124,10 +121,10 @@ Channels where the voltage would exceed 3000 V in table \ref{corected} were set 
 protect the PMTs. New single neutron peak as well as the double neutron peak were found and
 plotted in Figures \ref{eastThird}
 and \ref{westThird}. The position of the double neutron peak was set as twice the mean
-of the siingle neutron peak.
+of the single neutron peak.
 The resulting voltages in the next iteration are in table \ref{thirdCalib}.
 
-\begin{figure}[!htb]
+\begin{figure}[htb]
 \begin{center}
 \includegraphics[width=.8\textwidth]{neutronPeaksEastFinal.pdf}
 \end{center}
@@ -135,7 +132,7 @@ The resulting voltages in the next iteration are in table \ref{thirdCalib}.
 \label{eastThird}
 \end{figure}
 
-\begin{figure}[!htb]
+\begin{figure}[htb]
 \begin{center}
 \includegraphics[width=.8\textwidth]{neutronPeaksWestFinal.pdf}
 \end{center}
@@ -143,9 +140,9 @@ The resulting voltages in the next iteration are in table \ref{thirdCalib}.
 \label{westThird}
 \end{figure}
 
-\begin{table}[!htb] 
+\begin{table}[htb] 
 \caption{Calculated voltages from the test with corrected high voltages from table~\ref{corected}.
-The value 58 was set as the deseired position of the single neutron peak}
+The value 58 was set as the desired position of the single neutron peak}
 \label{thirdCalib}
 \begin{center}
 \begin{tabular}{lccccc}
@@ -163,4 +160,32 @@ West  &2653  &64 &0.634 &0.6 &2558 \\
 \end{tabular}
 \end{center}
 \end{table}
+
+The results of the test with voltages from Table \ref{thirdCalib} are shown in
+Figures \ref{oneMoreTestEast} and \ref{oneMoreTestWest}\@. The single neutron and double
+neutron peaks were fitted. The ratios between the towers in the East were measured as
+60.29:29.41:10.30 and in the West 61.07:30.52:8.41. 
+
+In conclusion, the ratios between the towers were closer to the desired ones in the
+test with voltages from Table \ref{thirdCalib}. The ratios between the single and double
+neutron peak in the East towers were closer to the real values in the test from
+Table \ref{corected}. Therefore, we suggest that the result voltages from Table \ref{corected}
+are used for the East towers and the voltages from Table \ref{thirdCalib} are used for the
+West towers.
+
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=.8\textwidth]{oneMoreTestEast.pdf}
+\end{center}
+\caption{Single neutron peak for east towers. Voltages were taken from table~\ref{thirdCalib}.}
+\label{oneMoreTestEast}
+\end{figure}
+
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=.8\textwidth]{oneMoreTestWest.pdf}
+\end{center}
+\caption{Single neutron peak for west towers. Voltages were taken from table~\ref{thirdCalib}.}
+\label{oneMoreTestWest}
+\end{figure}
 \end{document}
