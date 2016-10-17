@@ -70,7 +70,7 @@ We use some cuts in the code to extract the signal of the single neutron. In 201
 * 200 < ZDC TDC (timing on both sides) < 2000
 
 You can check the code in this repo in the files
-`zdcTree.C` and `zdcTree.h`. Change the `runNumber`, `trgSetup`, and `typeEnergy` variables in zdcTree.C, and
+`zdcTree.C` and `zdcTree.h`. Change the `runNumber`, `trgSetup`, and `typeEnergy` variables in `zdcTree.C`, and
 the address of the input TFile in the file `zdcTree.h` (on lines 102 and 105). After this, you can run it by typing
 ```sh
 $ ./run.sh $tofMultCut
