@@ -50,7 +50,7 @@ or you can simply use the macro prepared for this:
 $ ./read
 ```
 This will run the BFC chain (it can take a few minutes so this is a good time to have a coffee). When it is finished
-in your `dirOut`, you will get lots of pdfs and pngs with histograms and most importantly, a root file in
+in your `dirOut`, you will get lots of pdfs and pngs with histograms and ,most importantly, a root file in
 `dirOut/histo/someFileWithRunNumber.root`. Note that all of the histograms are also saved here.
 
 ### ZDC calibration code
