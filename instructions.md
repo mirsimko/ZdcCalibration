@@ -28,7 +28,7 @@ in the `data` folder will create a list of the transfered files.
 ### Making the TTree
 
 The analysis code is located in `StRoot` inside the base folder. First thing you need to do after you
-copy it is compiling it using
+copy the code is compiling it using
 ```sh
 $ starver dev
 $ cons
@@ -50,7 +50,7 @@ or you can simply use the macro prepared for this:
 $ ./read
 ```
 This will run the BFC chain (it can take a few minutes so this is a good time to have a coffee). When it is finished
-in your `dirOut`, you will get lots of pdfs and pngs, with histograms, and most importantly a root file in
+in your `dirOut`, you will get lots of pdfs and pngs with histograms and most importantly, a root file in
 `dirOut/histo/someFileWithRunNumber.root`. Note that all of the histograms are also saved here.
 
 ### ZDC calibration code
@@ -60,7 +60,7 @@ around 6:3:1, and the ADC readout value is proportional to the energy loss. So w
 distribution of each tower and calculate the ratio between them.
 
 The TTree, you created in the previous step, stores the ADC readout value of ZDC modules, tof-multi, and
-TDC valeus (timing) as well. 
+TDC values (timing) as well. 
 So the next step of ZDC cali. 
 should be to read the information and plot figures.
 We use some cuts in the code to extract the signal of the single neutron. In 2016, we used these cuts:
@@ -69,7 +69,7 @@ We use some cuts in the code to extract the signal of the single neutron. In 201
 * ZDC ADC sum in the oposite tower < 100
 * 200 < ZDC TDC (timing on both sides) < 2000
 
-You can check the code in `/direct/star+u/msimko/ZDC/ZDC_Calibration/run16.ZdcCalibration.msimko` in the files
+You can check the code in this repo in the files
 `zdcTree.C` and `zdcTree.h`. Change the `runNumber`, `trgSetup`, and `typeEnergy` variables in zdcTree.C, and
 the address of the input TFile in the file `zdcTree.h` (on lines 102 and 105). After this, you can run it by typing
 ```sh
