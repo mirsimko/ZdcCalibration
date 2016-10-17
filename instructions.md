@@ -76,7 +76,8 @@ the address of the input TFile in the file `zdcTree.h` (on lines 102 and 105). A
 $ ./run.sh $tofMultCut
 ```
 The results should appear in the `dirOut/analysis/runNumber` folder. Now, you can fit the ZDC ADC distributions
-and get the single and double neutron peaks. 
+and get the single and double neutron peaks (SNP and DNP, respectively). After you get the SNP, you can calibrate
+the ZDC HV as described e.g. here <https://www.star.bnl.gov/protected/heavy/msimko/voltagesResult.pdf>.
 
 ### Creating html page for monitoring
 
