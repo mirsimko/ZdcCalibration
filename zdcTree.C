@@ -20,7 +20,7 @@ void zdcTree::Loop()
   bool Create_folder = true;
   //*******************************************************
   //*******************************************************
-  int RunNumber = 17038001;
+  int RunNumber = 17038093;
   //	char trgSetup[50] = {"production_15GeV_2014"};
   //	char trgSetup[20] = {"pedestal_rhicclock"};
   char trgSetup[20] = {"ZdcCalibration"};
@@ -181,7 +181,7 @@ void zdcTree::Loop()
     if(tof_multiplicity >= mTofCut)
       continue;
 
-    if(!westCut) // look at the East
+    if(westCut) // look at the East
     {
       east_att->Fill(zdc_ADC_EastSum_Attenuated);
       east_sum->Fill(zdc_ADC_EastSum);
@@ -199,7 +199,7 @@ void zdcTree::Loop()
       east_sum_combination->Fill(zdc_ADC_EastTow1+zdc_ADC_EastTow2+zdc_ADC_EastTow3);
     }
 
-    if(!eastCut) // look at the West
+    if(eastCut) // look at the West
     {
       west_att->Fill(zdc_ADC_WestSum_Attenuated);
       west_sum->Fill(zdc_ADC_WestSum);
