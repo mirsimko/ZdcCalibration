@@ -1,7 +1,8 @@
 #!/bin/bash
 
-cp *.html ~/WWW/run16.ZdcCalibration
-cp *.htm ~/WWW/run16.ZdcCalibration
-cp -r analysis ~/WWW/run16.ZdcCalibration
-cp -r asym ~/WWW/run16.ZdcCalibration
-cp -r pdf ~/WWW/run16.ZdcCalibration
+mkdir -p ~/WWW/run17.ZdcCalibration
+cp *.html ~/WWW/run17.ZdcCalibration
+cp *.htm ~/WWW/run17.ZdcCalibration
+cp -r analysis ~/WWW/run17.ZdcCalibration
+cp -r asym ~/WWW/run17.ZdcCalibration
+cp -r pdf ~/WWW/run17.ZdcCalibration
