@@ -20,7 +20,7 @@ void zdcTree::Loop()
   bool Create_folder = true;
   //*******************************************************
   //*******************************************************
-  int RunNumber = 17038093;
+  int RunNumber = 17171009;
   //	char trgSetup[50] = {"production_15GeV_2014"};
   //	char trgSetup[20] = {"pedestal_rhicclock"};
   char trgSetup[20] = {"ZdcCalibration"};
@@ -164,12 +164,8 @@ void zdcTree::Loop()
     }
 
     // ADC sum cuts
-    // bool eastCut = zdc_ADC_EastSum > 92 - 2*18 && zdc_ADC_EastSum < 92 + 2*18;
-    // bool westCut = zdc_ADC_WestSum > 93 - 2*23 && zdc_ADC_WestSum < 93 + 2*23;
-    bool westCut = zdc_ADC_WestSum < 200;
-    bool eastCut = zdc_ADC_EastSum < 200;
-    // if(!eastCut)
-    //   continue;
+    bool westCut = zdc_ADC_WestSum < 100;
+    bool eastCut = zdc_ADC_EastSum < 100;
 
     // TAC cuts
     bool eastTACcut = zdc_TDC_EastSum > 200 && zdc_TDC_EastSum < 2000;
