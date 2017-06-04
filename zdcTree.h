@@ -12,7 +12,9 @@
 #include <TROOT.h>
 #include <TChain.h>
 #include <TFile.h>
+#include <TString.h>
 #include <climits>
+#include <limits>
 #include <iostream>
 
 using namespace std;
@@ -77,8 +79,9 @@ class zdcTree {
     TBranch        *b_bbc_ADC_EastSum_LargeTile;   //!
     TBranch        *b_bbc_ADC_WestSum_SmallTile;   //!
     TBranch        *b_bbc_ADC_WestSum_LargeTile;   //!
+    int mRunNumber;
 
-    zdcTree(TTree *tree=0, int tofCut = INT_MAX);
+    zdcTree(int RunNumber = 0, TTree *tree=0, int tofCut = std::numeric_limits<int>::max());
     virtual ~zdcTree();
     virtual Int_t    Cut(Long64_t entry);
     virtual Int_t    GetEntry(Long64_t entry);
@@ -92,23 +95,23 @@ class zdcTree {
 #endif
 
 #ifdef zdcTree_cxx
-zdcTree::zdcTree(TTree *tree, int tofCut)
+zdcTree::zdcTree(int runNumber, TTree *tree, int tofCut):
+  mTofCut(tofCut), mRunNumber(runNumber)
 {
   // if parameter tree is not specified (or zero), connect the file
   // used to generate this class and read the Tree.
 
   if (tree == 0) {
     //TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("/star/u/xyf/protected_lfspectra/ZDC_Calibration/run13.ZdcPolarimetry.pp500/histo/run_14142119.histo.root");//xuyifei
-    TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("/direct/star+u/msimko/ZDC/ZDC_Calibration/run17.ZdcCalibration.msimko/histo/run_18051018.histo.root");
+    TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject(Form("/direct/star+u/msimko/ZDC/ZDC_Calibration/run17.ZdcCalibration.msimko/histo/run_%d.histo.root", mRunNumber));
     if (!f) {
       //f = new TFile("/star/u/xyf/protected_lfspectra/ZDC_Calibration/run13.ZdcPolarimetry.pp500/histo/run_14142119.histo.root");// xuyifei
-      f = new TFile("/direct/star+u/msimko/ZDC/ZDC_Calibration/run17.ZdcCalibration.msimko/histo/run_18051018.histo.root");// xuyifei
+      f = new TFile(Form("/direct/star+u/msimko/ZDC/ZDC_Calibration/run17.ZdcCalibration.msimko/histo/run_%d.histo.root", mRunNumber));
     }
     tree = (TTree*)gDirectory->Get("zdcTree");
 
   } // if (tree == 0)
   Init(tree);
-  mTofCut = tofCut;
 }
 
 zdcTree::~zdcTree()
