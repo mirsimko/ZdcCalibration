@@ -1,9 +1,9 @@
 #include<iomanip>
+#include<iostream>
 
-void html_maker()
+void html_maker(int RunNumber = 0)
 {
 //*********************************************************// specify RunNumber & info.
-	int RunNumber = 18051018;
 	char trgSetup[50] = {"ZdcCalibration"};
 //	char trgSetup[20] = {"pp500production"};
 	char typeEnergy[10]={"msimko"};
@@ -11,6 +11,12 @@ void html_maker()
 	TString Trgsetup = "ZdcPolarimetry";
 	TString BeamTypeEnergy = "AuAu@200GeV";
 //*********************************************************
+	if(RunNumber < 1e7 || RunNumber >= 1e8) // has to be an 8-digit number
+	{
+	  using namespace std;
+	  cout << "invalid run number ... has to be an 8-digit number" << endl;
+	  return;
+	}
 
 	int RunYear=int(RunNumber/1000000)-1;
 	char root_file_path[200]={"/star/u/msimko/ZDC/ZDC_Calibration"};

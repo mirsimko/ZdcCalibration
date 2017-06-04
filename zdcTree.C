@@ -7,6 +7,7 @@
 #include <iostream>
 #include <fstream>
 #include <stdio.h>
+#include <TString.h>
 
 using namespace std;
 
@@ -20,11 +21,11 @@ void zdcTree::Loop()
   bool Create_folder = true;
   //*******************************************************
   //*******************************************************
-  int RunNumber = 18051018;
+  int RunNumber = mRunNumber;
   //	char trgSetup[50] = {"production_15GeV_2014"};
   //	char trgSetup[20] = {"pedestal_rhicclock"};
-  char trgSetup[20] = {"ZdcCalibration"};
-  char typeEnergy[10]={"msimko"};
+  char trgSetup[50] = {"ZdcCalibration"};
+  char typeEnergy[50]={"msimko"};
   //*******************************************************
   int RunYear=int(RunNumber/1000000)-1;
   //*******************************************************
@@ -164,13 +165,13 @@ void zdcTree::Loop()
     }
 
     // ADC sum cuts
-    // bool westCut = zdc_ADC_WestSum < 100;
-    // bool eastCut = zdc_ADC_EastSum < 100;
+    bool westCut = zdc_ADC_WestSum < 100;
+    bool eastCut = zdc_ADC_EastSum < 100;
     //
-    // // TAC cuts
-    // bool eastTACcut = zdc_TDC_EastSum > 200 && zdc_TDC_EastSum < 2000;
-    // bool westTACcut = zdc_TDC_WestSum > 200 && zdc_TDC_WestSum < 2000;
-    bool eastTACcut = true, westTACcut = true, westCut = true, eastCut = true; // not cutting on anything
+    // TAC cuts
+    bool eastTACcut = zdc_TDC_EastSum > 200 && zdc_TDC_EastSum < 2000;
+    bool westTACcut = zdc_TDC_WestSum > 200 && zdc_TDC_WestSum < 2000;
+    // bool westCut = true, eastCut = true; // not cutting on anything
     if (!(eastTACcut && westTACcut))
       continue;
 
