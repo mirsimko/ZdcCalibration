@@ -106,13 +106,13 @@ void zdcTree::Loop()
   char savename_east_sum_combination[200];
 
   TH1D *east_att = new TH1D("ZDC_ADC_east_att","ZDC_ADC_east_att",400,0,4000);// attenuated
-  TH1D *east_sum = new TH1D("ZDC_ADC_east_sum","ZDC_ADC_east_sum",100,0,400); // close view of the single neutron peak
+  TH1D *east_sum = new TH1D("ZDC_ADC_east_sum","ZDC_ADC_east_sum",100,0,800); // close view of the single neutron peak
   TH1D *east_1 = new TH1D("ZDC_ADC_east_1","ZDC_ADC_east_1",400,0,4000);
   TH1D *east_2 = new TH1D("ZDC_ADC_east_2","ZDC_ADC_east_2",400,0,4000);
   TH1D *east_3 = new TH1D("ZDC_ADC_east_3","ZDC_ADC_east_3",400,0,4000);
 
   TH1D *west_att = new TH1D("ZDC_ADC_west_att","ZDC_ADC_west_att",400,0,4000);
-  TH1D *west_sum = new TH1D("ZDC_ADC_west_sum","ZDC_ADC_west_sum",100,0,400); // close view of the single neutron peak
+  TH1D *west_sum = new TH1D("ZDC_ADC_west_sum","ZDC_ADC_west_sum",100,0,800); // close view of the single neutron peak
   TH1D *west_1 = new TH1D("ZDC_ADC_west_1","ZDC_ADC_west_1",400,0,4000);
   TH1D *west_2 = new TH1D("ZDC_ADC_west_2","ZDC_ADC_west_2",400,0,4000);
   TH1D *west_3 = new TH1D("ZDC_ADC_west_3","ZDC_ADC_west_3",400,0,4000);
@@ -165,13 +165,19 @@ void zdcTree::Loop()
     }
 
     // ADC sum cuts
-    bool westCut = zdc_ADC_WestSum < 100;
-    bool eastCut = zdc_ADC_EastSum < 100;
+    bool westCut = zdc_ADC_WestSum < 400;
+    bool eastCut = zdc_ADC_EastSum < 400;
     //
     // TAC cuts
     bool eastTACcut = zdc_TDC_EastSum > 200 && zdc_TDC_EastSum < 2000;
     bool westTACcut = zdc_TDC_WestSum > 200 && zdc_TDC_WestSum < 2000;
     // bool westCut = true, eastCut = true; // not cutting on anything
+    const float eastSnpMean = 87;
+    const float eastSnpSigma = 20.4;
+    const float westSnpMean = 80.4;
+    const float westSnpSigma = 29.5;
+    const float NSigma = 2.;
+
     if (!(eastTACcut && westTACcut))
       continue;
 
@@ -187,11 +193,15 @@ void zdcTree::Loop()
       east_2->Fill(zdc_ADC_EastTow2);
       east_3->Fill(zdc_ADC_EastTow3);
 
-      east_count_att += zdc_ADC_EastSum_Attenuated;
-      east_count_sum += zdc_ADC_EastSum;
-      east_count_1 += zdc_ADC_EastTow1;
-      east_count_2 += zdc_ADC_EastTow2;
-      east_count_3 += zdc_ADC_EastTow3;
+      if (zdc_ADC_EastSum > eastSnpMean - NSigma*eastSnpSigma && 
+	  zdc_ADC_EastSum < eastSnpMean + NSigma*eastSnpSigma)
+      {
+	east_count_att += zdc_ADC_EastSum_Attenuated;
+	east_count_sum += zdc_ADC_EastSum;
+	east_count_1 += zdc_ADC_EastTow1;
+	east_count_2 += zdc_ADC_EastTow2;
+	east_count_3 += zdc_ADC_EastTow3;
+      }
 
       east_sum_diff->Fill(zdc_ADC_EastTow1+zdc_ADC_EastTow2+zdc_ADC_EastTow3,zdc_ADC_EastSum);
       east_sum_combination->Fill(zdc_ADC_EastTow1+zdc_ADC_EastTow2+zdc_ADC_EastTow3);
@@ -205,11 +215,15 @@ void zdcTree::Loop()
       west_2->Fill(zdc_ADC_WestTow2);
       west_3->Fill(zdc_ADC_WestTow3);
 
-      west_count_att += zdc_ADC_WestSum_Attenuated;
-      west_count_sum += zdc_ADC_WestSum;
-      west_count_1 += zdc_ADC_WestTow1;
-      west_count_2 += zdc_ADC_WestTow2;
-      west_count_3 += zdc_ADC_WestTow3;
+      if (zdc_ADC_WestSum > westSnpMean - NSigma*westSnpSigma && 
+	  zdc_ADC_WestSum < westSnpMean + NSigma*westSnpSigma)
+      {
+	west_count_att += zdc_ADC_WestSum_Attenuated;
+	west_count_sum += zdc_ADC_WestSum;
+	west_count_1 += zdc_ADC_WestTow1;
+	west_count_2 += zdc_ADC_WestTow2;
+	west_count_3 += zdc_ADC_WestTow3;
+      }
 
       west_sum_diff->Fill(zdc_ADC_WestTow1+zdc_ADC_WestTow2+zdc_ADC_WestTow3,zdc_ADC_WestSum);
       west_sum_combination->Fill(zdc_ADC_WestTow1+zdc_ADC_WestTow2+zdc_ADC_WestTow3);

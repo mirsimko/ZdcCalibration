@@ -103,10 +103,10 @@ zdcTree::zdcTree(int runNumber, TTree *tree, int tofCut):
 
   if (tree == 0) {
     //TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("/star/u/xyf/protected_lfspectra/ZDC_Calibration/run13.ZdcPolarimetry.pp500/histo/run_14142119.histo.root");//xuyifei
-    TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject(Form("/direct/star+u/msimko/ZDC/ZDC_Calibration/run17.ZdcCalibration.msimko/histo/run_%d.histo.root", mRunNumber));
+    TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject(Form("/direct/star+u/msimko/ZDC/ZDC_Calibration/run18.ZdcCalibration.msimko/histo/run_%d.histo.root", mRunNumber));
     if (!f) {
       //f = new TFile("/star/u/xyf/protected_lfspectra/ZDC_Calibration/run13.ZdcPolarimetry.pp500/histo/run_14142119.histo.root");// xuyifei
-      f = new TFile(Form("/direct/star+u/msimko/ZDC/ZDC_Calibration/run17.ZdcCalibration.msimko/histo/run_%d.histo.root", mRunNumber));
+      f = new TFile(Form("/direct/star+u/msimko/ZDC/ZDC_Calibration/run18.ZdcCalibration.msimko/histo/run_%d.histo.root", mRunNumber));
     }
     tree = (TTree*)gDirectory->Get("zdcTree");
 

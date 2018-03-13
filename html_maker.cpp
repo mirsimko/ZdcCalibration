@@ -8,8 +8,8 @@ void html_maker(int RunNumber = 0)
 //	char trgSetup[20] = {"pp500production"};
 	char typeEnergy[10]={"msimko"};
 
-	TString Trgsetup = "ZdcPolarimetry";
-	TString BeamTypeEnergy = "AuAu@200GeV";
+	TString Trgsetup = "tune_2018 zdcw-bbcveto";
+	TString BeamTypeEnergy = "X+X@200GeV";
 //*********************************************************
 	if(RunNumber < 1e7 || RunNumber >= 1e8) // has to be an 8-digit number
 	{

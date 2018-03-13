@@ -1,3 +1,4 @@
+#include <string>
 // NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
 // 1  Constant     7.11954e+01   1.92490e+01   6.98087e-03  -1.45442e-05
 // 2  BgConstant   1.91250e+03   3.33039e+02   8.66676e-02   1.43172e-06
@@ -9,7 +10,8 @@
 
 void plotSingleNeutron()
 {
-  TFile *inf1 = new TFile("analysis/17171009/17171009_my_zdc_result_file.root");
+  std::string runNumber = "19071065";
+  TFile *inf1 = new TFile( ("analysis/" + runNumber + "/" + runNumber + "_my_zdc_result_file.root").data() );
 
   TCanvas *C1 = new TCanvas("C1", "east", 600, 400);
   TCanvas *C2 = new TCanvas("C2", "west", 600, 400);
@@ -17,11 +19,11 @@ void plotSingleNeutron()
   TH1D *hEast = (TH1D*)inf1->Get("ZDC_ADC_east_sum");
   TH1D *hWest = (TH1D*)inf1->Get("ZDC_ADC_west_sum");
 
-  TF1 *eastF = new TF1("eastF", "[0] + ([1])*(TMath::Exp(-[2]*x)) + ([3])*(TMath::Gaus(x,[4],[5],1)) + [6]*TMath::Gaus(x,2.*[4],[7],1)",50,180);
-  TF1 *westF = new TF1("westF", "[0] + ([1])*(TMath::Exp(-[2]*x)) + ([3])*(TMath::Gaus(x,[4],[5],1)) + [6]*TMath::Gaus(x,2.*[4],[7],1)",50,180);
+  TF1 *eastF = new TF1("eastF", "[0] + ([1])*(TMath::Exp(-[2]*x)) + ([3])*(TMath::Gaus(x,[4],[5],1)) + [6]*TMath::Gaus(x,2.*[4],[7],1)",50,400);
+  TF1 *westF = new TF1("westF", "[0] + ([1])*(TMath::Exp(-[2]*x)) + ([3])*(TMath::Gaus(x,[4],[5],1)) + [6]*TMath::Gaus(x,2.*[4],[7],1)",50,400);
 
   //eastF->SetParameters( 7.11954e+01, 1.91250e+03 , 2.24099e-02, 14,  9.44266e+01 , 9.80875e+00 );
-  eastF->SetParameters(  -3500, 3500, 0.00044, 15000, 52  , 9.80875e+00, 5000, 10 );
+  eastF->SetParameters(  -3500, 3500, 0.00044, 15000, 80, 9.80875e+00, 5000, 10 );
   eastF->SetParName(0,"Constant");
   eastF->SetParName(1,"BgConstant");
   eastF->SetParName(2,"BgSlope");
@@ -31,7 +33,7 @@ void plotSingleNeutron()
   eastF->SetParName(6,"Yield Double");
   eastF->SetParName(7,"sigma Double");
 
-  westF->SetParameters( -3300, 3600, 0.00001, 9000, 52 , 9.80875e+00 ,2200, 10);
+  westF->SetParameters( -3300, 3600, 0.00001, 9000, 90 , 9.80875e+00 ,2200, 10);
   //westF->SetParameters( 7.11954e+01, 1.91250e+03 , 2.24099e-02, 14,  110 , 9.80875e+00 );
   westF->SetParName(0,"Constant");
   westF->SetParName(1,"BgConstant");
@@ -42,9 +44,8 @@ void plotSingleNeutron()
   westF->SetParName(6,"Yield Double");
   westF->SetParName(7,"sigma Double");
 
-  hEast->Fit("eastF", "","", 35, 300);
-  hWest->Fit("westF", "","", 35, 300);
-
+  hEast->Fit("eastF", "","", 50, 330);
+  hWest->Fit("westF", "","", 60, 330);
   // hEast->SetAxisRange(50,180,"X");
   // hWest->SetAxisRange(50,180,"X");
 
@@ -64,4 +65,13 @@ void plotSingleNeutron()
   gStyle->SetOptFit(1111);
   hWest->Draw();
 
+  std::string eastFileName = "analysis/" + runNumber + "/snp" + runNumber + "east";
+  C1->SaveAs( (eastFileName + ".pdf" ).data() );
+  C1->SaveAs( (eastFileName + ".png" ).data() );
+  C1->SaveAs( (eastFileName + ".root").data() );
+
+  std::string westFileName = "analysis/" + runNumber + "/snp" + runNumber + "west";
+  C2->SaveAs( (westFileName + ".pdf" ).data() );
+  C2->SaveAs( (westFileName + ".png" ).data() );
+  C2->SaveAs( (westFileName + ".root").data() );
 }
